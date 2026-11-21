@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
 
 <header>
     <div class="logo">ShopSphere</div>
+
     <nav>
         <a href="/">Home</a>
         <a href="#categories">Categories</a>
@@ -28,81 +30,128 @@
 </section>
 
 <section class="categories" id="categories">
+
     <h2>Shop by Category</h2>
 
     <div class="category-container">
-        <div class="category-card">
+
+        <a href="/?category=Fashion#products"
+           class="category-card"
+           style="text-decoration:none; color:inherit;">
             <h3>Fashion</h3>
             <p>Style for everyday life</p>
-        </div>
+        </a>
 
-        <div class="category-card">
+        <a href="/?category=Electronics#products"
+           class="category-card"
+           style="text-decoration:none; color:inherit;">
             <h3>Electronics</h3>
             <p>Modern gadgets</p>
-        </div>
+        </a>
 
-        <div class="category-card">
+        <a href="/?category=Accessories#products"
+           class="category-card"
+           style="text-decoration:none; color:inherit;">
             <h3>Accessories</h3>
             <p>Simple and stylish</p>
-        </div>
+        </a>
+
     </div>
+
 </section>
 
 <section class="search-section">
+
     <h2>Find Your Product</h2>
 
     <form action="/" method="get">
-        <input type="text" name="keyword"
+
+        <input type="text"
+               name="keyword"
                placeholder="Search products..."
                th:value="${keyword}">
 
+        <input type="hidden" name="category" th:value="${category}">
+
         <button type="submit">Search</button>
+
         <a href="/" class="shop-button">Clear</a>
+
     </form>
+
 </section>
 
 <section class="products" id="products">
+
     <h2>Our Products</h2>
+
+    <div style="text-align:center; margin-bottom:25px;">
+        <a href="/" class="shop-button">All Products</a>
+    </div>
 
     <div class="product-container">
 
         <div class="product-card" th:each="product : ${products}">
 
-            <img th:src="${product.image}" th:alt="${product.name}">
+            <a th:href="@{/product/{id}(id=${product.id})}">
+                <img th:src="${product.image}"
+                     th:alt="${product.name}">
+            </a>
 
-            <h3 th:text="${product.name}"></h3>
+            <a th:href="@{/product/{id}(id=${product.id})}"
+               style="text-decoration:none; color:inherit;">
+                <h3 th:text="${product.name}"></h3>
+            </a>
 
             <p th:text="${product.description}"></p>
+
+            <p th:text="${product.category}"></p>
 
             <h4 th:text="|₹${product.price}|"></h4>
 
             <form action="/add-to-cart" method="post">
+
                 <input type="hidden" name="id" th:value="${product.id}">
                 <input type="hidden" name="name" th:value="${product.name}">
                 <input type="hidden" name="price" th:value="${product.price}">
                 <input type="hidden" name="image" th:value="${product.image}">
 
                 <button type="submit">Add to Cart</button>
+
             </form>
 
         </div>
 
     </div>
+
+    <div th:if="${products.isEmpty()}"
+         style="text-align:center; padding:30px;">
+        <h3>No products found!</h3>
+        <p>Try another category or search keyword.</p>
+        <a href="/" class="shop-button">View All Products</a>
+    </div>
+
 </section>
 
 <section class="about" id="about">
+
     <h2>About ShopSphere</h2>
+
     <p>
-        ShopSphere is a simple online shopping management system
+        ShopSphere is an online shopping management system
         that allows users to explore products, search items,
+        browse categories, view product details,
         add products to their cart and proceed to checkout.
     </p>
+
 </section>
 
 <footer>
+
     <h3>ShopSphere</h3>
     <p>Your everyday shopping destination.</p>
     <p>© 2026 ShopSphere. All rights reserved.</p>
+
 </footer>
 
 </body>
