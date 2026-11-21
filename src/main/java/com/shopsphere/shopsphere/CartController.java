@@ -60,7 +60,7 @@ public class CartController {
         }
 
         if (!found) {
-            Product product = new Product(id, name, "", price, image);
+            Product product = new Product(id, name, "", price, image, "Other");
             cart.add(new CartItem(product, 1));
         }
 

@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopSphere - Product Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+        .details-page {
+            padding: 60px 8%;
+        }
+
+        .details-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .details-image {
+            width: 45%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .details-info {
+            flex: 1;
+        }
+
+        .details-info h1 {
+            margin-bottom: 20px;
+        }
+
+        .details-info p {
+            margin: 15px 0;
+            color: #666;
+        }
+
+        .details-price {
+            color: #6c4ce4;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .details-category {
+            display: inline-block;
+            background: #eee8ff;
+            color: #6c4ce4;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 10px 0;
+        }
+
+        .details-info button {
+            background: #6c4ce4;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            text-decoration: none;
+            color: #6c4ce4;
+        }
+
+        @media (max-width: 700px) {
+            .details-container {
+                flex-direction: column;
+            }
+
+            .details-image {
+                width: 100%;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ShopSphere</div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/cart">🛒 View Cart</a>
+    </nav>
+</header>
+
+<section class="details-page">
+
+    <div class="details-container">
+
+        <img class="details-image"
+             th:src="${product.image}"
+             th:alt="${product.name}">
+
+        <div class="details-info">
+
+            <h1 th:text="${product.name}"></h1>
+
+            <span class="details-category"
+                  th:text="${product.category}"></span>
+
+            <p th:text="${product.description}"></p>
+
+            <h2 class="details-price"
+                th:text="|₹${product.price}|"></h2>
+
+            <form action="/add-to-cart" method="post">
+
+                <input type="hidden" name="id" th:value="${product.id}">
+                <input type="hidden" name="name" th:value="${product.name}">
+                <input type="hidden" name="price" th:value="${product.price}">
+                <input type="hidden" name="image" th:value="${product.image}">
+
+                <button type="submit">Add to Cart</button>
+
+            </form>
+
+            <a href="/" class="back-link">← Back to Shopping</a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    <h3>ShopSphere</h3>
+    <p>Your everyday shopping destination.</p>
+    <p>© 2026 ShopSphere. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
