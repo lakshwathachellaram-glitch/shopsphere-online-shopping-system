@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopSphere - Order Successful</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+        .success-page {
+            min-height: 65vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .success-box {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .success-icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+
+        .success-box h1 {
+            color: #6c4ce4;
+            margin-bottom: 15px;
+        }
+
+        .success-box p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .home-button {
+            display: inline-block;
+            background: #6c4ce4;
+            color: white;
+            padding: 14px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ShopSphere</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/cart">Cart</a>
+    </nav>
+</header>
+
+<section class="success-page">
+
+    <div class="success-box">
+
+        <div class="success-icon">✅</div>
+
+        <h1>Order Placed Successfully!</h1>
+
+        <p>Thank you for shopping with ShopSphere.</p>
+
+        <h2 th:text="|Your Order Total: ₹${total}|"></h2>
+
+        <p>Your order has been confirmed.</p>
+
+        <a href="/" class="home-button">Continue Shopping</a>
+
+    </div>
+
+</section>
+
+<footer>
+    <h3>ShopSphere</h3>
+    <p>Your everyday shopping destination.</p>
+    <p>© 2026 ShopSphere. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
