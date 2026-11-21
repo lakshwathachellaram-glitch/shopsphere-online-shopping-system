@@ -20,6 +20,20 @@
         <a href="#products">Products</a>
         <a href="#about">About</a>
         <a href="/cart">🛒 View Cart</a>
+        <a href="/wishlist">❤️ My Wishlist</a>
+        <a href="/order-history">📦 My Orders</a>
+        <a href="/admin">📊 Admin Dashboard</a>
+        <a href="/contact">📩 Contact & Help</a>
+
+        <span th:if="${session.loggedInUser != null}">
+            Welcome, <span th:text="${session.loggedInUser}"></span>
+            <a href="/logout">Logout</a>
+        </span>
+
+        <span th:if="${session.loggedInUser == null}">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </span>
     </nav>
 </header>
 
@@ -104,20 +118,16 @@
             </a>
 
             <p th:text="${product.description}"></p>
-
             <p th:text="${product.category}"></p>
 
             <h4 th:text="|₹${product.price}|"></h4>
 
             <form action="/add-to-cart" method="post">
-
                 <input type="hidden" name="id" th:value="${product.id}">
                 <input type="hidden" name="name" th:value="${product.name}">
                 <input type="hidden" name="price" th:value="${product.price}">
                 <input type="hidden" name="image" th:value="${product.image}">
-
                 <button type="submit">Add to Cart</button>
-
             </form>
 
         </div>
@@ -147,11 +157,9 @@
 </section>
 
 <footer>
-
     <h3>ShopSphere</h3>
     <p>Your everyday shopping destination.</p>
     <p>© 2026 ShopSphere. All rights reserved.</p>
-
 </footer>
 
 </body>

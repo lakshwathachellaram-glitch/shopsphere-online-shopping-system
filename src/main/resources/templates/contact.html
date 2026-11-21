@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contact Us - ShopSphere</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #222;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px #ddd;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 130px;
+        }
+
+        button {
+            background: #222;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+        }
+
+        a {
+            color: #2874c7;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📩 Contact ShopSphere</h1>
+
+    <div class="box">
+
+        <h2>Contact Us</h2>
+
+        <p th:if="${success}" class="success" th:text="${success}"></p>
+
+        <form action="/contact" method="post">
+
+            <input type="text" name="name"
+                   placeholder="Your Name" required>
+
+            <input type="email" name="email"
+                   placeholder="Your Email" required>
+
+            <textarea name="message"
+                      placeholder="Write your message here..."
+                      required></textarea>
+
+            <button type="submit">Submit Message</button>
+
+        </form>
+
+    </div>
+
+    <div class="box">
+
+        <h2>❓ Frequently Asked Questions</h2>
+
+        <h3>1. How can I place an order?</h3>
+        <p>Select a product, add it to your cart and proceed to checkout.</p>
+
+        <h3>2. How can I view my orders?</h3>
+        <p>Login and select My Orders to view your order history.</p>
+
+        <h3>3. Can I use a coupon?</h3>
+        <p>Yes! Enter a valid coupon code during checkout to get a discount.</p>
+
+        <h3>4. How do I add products to my wishlist?</h3>
+        <p>Open a product and click Add to Wishlist.</p>
+
+        <h3>5. How can I contact ShopSphere?</h3>
+        <p>Use the contact form above to submit your questions or feedback.</p>
+
+    </div>
+
+    <a href="/">← Back to Shop</a>
+
+</div>
+
+</body>
+</html>
