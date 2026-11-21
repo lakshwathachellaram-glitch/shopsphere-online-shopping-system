@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopSphere - Checkout</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+        .checkout-page {
+            padding: 50px 8%;
+        }
+
+        .checkout-box {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .checkout-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .checkout-total {
+            text-align: right;
+            margin-top: 25px;
+            color: #6c4ce4;
+        }
+
+        .place-order-button {
+            background: #6c4ce4;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ShopSphere</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/cart">Cart</a>
+    </nav>
+</header>
+
+<section class="checkout-page">
+
+    <div class="checkout-box">
+
+        <h1>Checkout</h1>
+        <p>Review your items before placing your order.</p>
+
+        <div class="checkout-item" th:each="item : ${cart}">
+            <span>
+                <b th:text="${item.product.name}"></b>
+                <span th:text="| × ${item.quantity}|"></span>
+            </span>
+
+            <span th:text="|₹${item.subtotal}|"></span>
+        </div>
+
+        <div class="checkout-total">
+            <h2 th:text="|Total Amount: ₹${total}|"></h2>
+        </div>
+
+        <form action="/place-order" method="post">
+            <button type="submit" class="place-order-button">
+                Place Order
+            </button>
+        </form>
+
+        <br>
+
+        <a href="/cart" class="back-button">← Back to Cart</a>
+
+    </div>
+
+</section>
+
+<footer>
+    <h3>ShopSphere</h3>
+    <p>Your everyday shopping destination.</p>
+</footer>
+
+</body>
+</html>

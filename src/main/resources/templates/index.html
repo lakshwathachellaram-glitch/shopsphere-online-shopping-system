@@ -1,7 +1,6 @@
 
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,151 +10,100 @@
 
 <body>
 
-    <!-- Navbar -->
-    <header>
-        <div class="logo">ShopSphere</div>
+<header>
+    <div class="logo">ShopSphere</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="/cart">🛒 View Cart</a>
+    </nav>
+</header>
 
-        <nav>
-            <a href="/">Home</a>
-            <a href="#categories">Categories</a>
-            <a href="#products">Products</a>
-            <a href="#about">About</a>
-        </nav>
+<section class="hero">
+    <h1>Welcome to ShopSphere</h1>
+    <p>Everything you need, all in one place.</p>
+    <a href="#products" class="shop-button">Shop Now</a>
+</section>
 
-        <div class="header-buttons">
-            <a href="#" class="login">Login</a>
-            <a href="#products" class="cart">🛒 Shop Now</a>
-        </div>
-    </header>
+<section class="categories" id="categories">
+    <h2>Shop by Category</h2>
 
-    <!-- Hero Section -->
-    <section class="hero">
-
-        <div class="hero-content">
-            <p class="tagline">YOUR EVERYDAY SHOPPING DESTINATION</p>
-
-            <h1>Discover Products<br>You'll Love.</h1>
-
-            <p class="description">
-                Explore amazing products, great prices and a shopping
-                experience designed just for you.
-            </p>
-
-            <a href="#products" class="shop-button">Explore Collection →</a>
+    <div class="category-container">
+        <div class="category-card">
+            <h3>Fashion</h3>
+            <p>Style for everyday life</p>
         </div>
 
-        <div class="hero-image">
-            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80"
-                 alt="Shopping store">
+        <div class="category-card">
+            <h3>Electronics</h3>
+            <p>Modern gadgets</p>
         </div>
 
-    </section>
-
-    <!-- Categories -->
-    <section class="categories" id="categories">
-
-        <h2>Shop by Category</h2>
-        <p class="section-description">Find what you're looking for</p>
-
-        <div class="category-container">
-
-            <div class="category-card">
-                <div class="category-icon">👕</div>
-                <h3>Fashion</h3>
-            </div>
-
-            <div class="category-card">
-                <div class="category-icon">📱</div>
-                <h3>Electronics</h3>
-            </div>
-
-            <div class="category-card">
-                <div class="category-icon">🏠</div>
-                <h3>Home</h3>
-            </div>
-
-            <div class="category-card">
-                <div class="category-icon">🎒</div>
-                <h3>Accessories</h3>
-            </div>
-
+        <div class="category-card">
+            <h3>Accessories</h3>
+            <p>Simple and stylish</p>
         </div>
+    </div>
+</section>
 
-    </section>
+<section class="search-section">
+    <h2>Find Your Product</h2>
 
-    <!-- Search -->
-    <section class="search-section" id="search">
+    <form action="/" method="get">
+        <input type="text" name="keyword"
+               placeholder="Search products..."
+               th:value="${keyword}">
 
-        <h2>Find Your Favourite Products</h2>
+        <button type="submit">Search</button>
+        <a href="/" class="shop-button">Clear</a>
+    </form>
+</section>
 
-        <form action="/" method="get" class="search-form">
+<section class="products" id="products">
+    <h2>Our Products</h2>
 
-            <input type="text"
-                   name="keyword"
-                   placeholder="Search products..."
-                   th:value="${keyword}">
+    <div class="product-container">
 
-            <button type="submit">Search</button>
+        <div class="product-card" th:each="product : ${products}">
 
-            <a href="/" class="clear-button">Clear</a>
+            <img th:src="${product.image}" th:alt="${product.name}">
 
-        </form>
+            <h3 th:text="${product.name}"></h3>
 
-    </section>
+            <p th:text="${product.description}"></p>
 
-    <!-- Products -->
-    <section class="products" id="products">
+            <h4 th:text="|₹${product.price}|"></h4>
 
-        <h2>Popular Products</h2>
-        <p class="section-description">Explore our featured collection</p>
+            <form action="/add-to-cart" method="post">
+                <input type="hidden" name="id" th:value="${product.id}">
+                <input type="hidden" name="name" th:value="${product.name}">
+                <input type="hidden" name="price" th:value="${product.price}">
+                <input type="hidden" name="image" th:value="${product.image}">
 
-        <div class="product-container" th:if="${!products.isEmpty()}">
-
-            <div class="product-card" th:each="product : ${products}">
-
-                <img th:src="${product.image}" th:alt="${product.name}">
-
-                <h3 th:text="${product.name}"></h3>
-
-                <p th:text="${product.description}"></p>
-
-                <h4 th:text="|₹${product.price}|"></h4>
-
-                <button type="button">Add to Cart</button>
-
-            </div>
+                <button type="submit">Add to Cart</button>
+            </form>
 
         </div>
 
-        <div class="no-products" th:if="${products.isEmpty()}">
-            <h3>No products found!</h3>
-            <p>Try searching with another keyword.</p>
-        </div>
+    </div>
+</section>
 
-    </section>
+<section class="about" id="about">
+    <h2>About ShopSphere</h2>
+    <p>
+        ShopSphere is a simple online shopping management system
+        that allows users to explore products, search items,
+        add products to their cart and proceed to checkout.
+    </p>
+</section>
 
-    <!-- About -->
-    <section class="about" id="about">
-
-        <h2>Shopping Made Simple</h2>
-
-        <p>
-            ShopSphere brings your favorite products together in one place.
-            Discover, explore and enjoy a simple shopping experience.
-        </p>
-
-    </section>
-
-    <!-- Footer -->
-    <footer>
-
-        <h3>ShopSphere</h3>
-
-        <p>Your everyday shopping destination.</p>
-
-        <p>© 2026 ShopSphere. All rights reserved.</p>
-
-    </footer>
+<footer>
+    <h3>ShopSphere</h3>
+    <p>Your everyday shopping destination.</p>
+    <p>© 2026 ShopSphere. All rights reserved.</p>
+</footer>
 
 </body>
 </html>

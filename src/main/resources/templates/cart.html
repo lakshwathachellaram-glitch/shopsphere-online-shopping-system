@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopSphere - Shopping Cart</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+        .cart-page {
+            padding: 50px 7%;
+        }
+
+        .cart-page h1 {
+            margin-bottom: 30px;
+            color: #24213a;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+        }
+
+        .cart-item img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .cart-details {
+            flex: 1;
+        }
+
+        .cart-details h3 {
+            margin-bottom: 10px;
+        }
+
+        .cart-details p {
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        .remove-button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: right;
+            margin-top: 25px;
+        }
+
+        .cart-total h2 {
+            color: #6c4ce4;
+            margin-bottom: 20px;
+        }
+
+        .continue-button,
+        .checkout-button {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 5px;
+        }
+
+        .continue-button {
+            background: #eee;
+            color: #333;
+        }
+
+        .checkout-button {
+            background: #6c4ce4;
+            color: white;
+        }
+
+        .empty-cart {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">ShopSphere</div>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/#products">Products</a>
+        </nav>
+
+        <div class="header-buttons">
+            <a href="/" class="login">Continue Shopping</a>
+        </div>
+    </header>
+
+    <section class="cart-page">
+
+        <h1>🛒 Your Shopping Cart</h1>
+
+        <div th:if="${cart.isEmpty()}" class="empty-cart">
+            <h2>Your cart is empty!</h2>
+            <p>Explore our products and add something you like.</p>
+            <br>
+            <a href="/" class="shop-button">Start Shopping</a>
+        </div>
+
+        <div th:unless="${cart.isEmpty()}">
+
+            <div class="cart-item" th:each="item : ${cart}">
+
+                <img th:src="${item.product.image}"
+                     th:alt="${item.product.name}">
+
+                <div class="cart-details">
+                    <h3 th:text="${item.product.name}"></h3>
+
+                    <p th:text="|Price: ₹${item.product.price}|"></p>
+
+                    <p th:text="|Quantity: ${item.quantity}|"></p>
+
+                    <h3 th:text="|Subtotal: ₹${item.subtotal}|"></h3>
+                </div>
+
+                <form action="/remove-from-cart" method="post">
+                    <input type="hidden"
+                           name="id"
+                           th:value="${item.product.id}">
+
+                    <button class="remove-button" type="submit">
+                        Remove
+                    </button>
+                </form>
+
+            </div>
+
+            <div class="cart-total">
+
+                <h2 th:text="|Total: ₹${total}|"></h2>
+
+                <a href="/" class="continue-button">Continue Shopping</a>
+
+                <a href="/checkout" class="checkout-button">Proceed to Checkout</a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+        <h3>ShopSphere</h3>
+        <p>Your everyday shopping destination.</p>
+        <p>© 2026 ShopSphere. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
