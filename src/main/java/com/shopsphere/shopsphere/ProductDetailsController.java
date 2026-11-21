@@ -48,6 +48,11 @@ public class ProductDetailsController {
 
         model.addAttribute("product", product);
 
+        model.addAttribute("reviews",
+                ReviewController.reviews.stream()
+                        .filter(review -> review.getProductId() == id)
+                        .toList());
+
         return "product-details";
     }
 }

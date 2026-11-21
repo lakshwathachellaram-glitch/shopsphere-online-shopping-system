@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order History - ShopSphere</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+        }
+
+        .order-card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px #ddd;
+        }
+
+        .order-card p {
+            font-size: 16px;
+        }
+
+        .empty {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #2874c7;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            background: #222;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📦 My Order History</h1>
+
+    <div th:if="${orders.isEmpty()}" class="empty">
+        <h2>No orders yet!</h2>
+        <p>Your orders will appear here after you purchase products.</p>
+        <a href="/">Start Shopping</a>
+    </div>
+
+    <div th:each="order : ${orders}" class="order-card">
+
+        <h2>Order #<span th:text="${order.orderId}"></span></h2>
+
+        <p>
+            <strong>Customer:</strong>
+            <span th:text="${order.customerName}"></span>
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            <span th:text="${order.email}"></span>
+        </p>
+
+        <p>
+            <strong>Total Amount:</strong>
+            ₹<span th:text="${order.total}"></span>
+        </p>
+
+        <p>
+            <strong>Order Date:</strong>
+            <span th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"></span>
+        </p>
+
+        <p>🟢 Order Placed</p>
+
+    </div>
+
+    <a href="/" class="back">Continue Shopping</a>
+
+</div>
+
+</body>
+</html>

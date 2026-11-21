@@ -1,50 +1,36 @@
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopSphere - Order Successful</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Order Successful - ShopSphere</title>
 
     <style>
-        .success-page {
-            min-height: 65vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-        }
-
-        .success-box {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
             text-align: center;
-            max-width: 600px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            padding: 60px 20px;
         }
 
-        .success-icon {
-            font-size: 70px;
-            margin-bottom: 20px;
+        .box {
+            background: white;
+            max-width: 500px;
+            margin: auto;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #ddd;
         }
 
-        .success-box h1 {
-            color: #6c4ce4;
-            margin-bottom: 15px;
+        h1 {
+            color: #28a745;
         }
 
-        .success-box p {
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .home-button {
+        a {
             display: inline-block;
-            background: #6c4ce4;
+            margin: 10px;
+            padding: 12px 20px;
+            background: #222;
             color: white;
-            padding: 14px 25px;
             text-decoration: none;
             border-radius: 8px;
         }
@@ -53,39 +39,23 @@
 
 <body>
 
-<header>
-    <div class="logo">ShopSphere</div>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/cart">Cart</a>
-    </nav>
-</header>
+<div class="box">
 
-<section class="success-page">
+    <h1>🎉 Order Placed Successfully!</h1>
 
-    <div class="success-box">
+    <p>Thank you for shopping with ShopSphere.</p>
 
-        <div class="success-icon">✅</div>
+    <h3>Order ID: <span th:text="${orderId}"></span></h3>
 
-        <h1>Order Placed Successfully!</h1>
+    <h2>Total: ₹<span th:text="${total}"></span></h2>
 
-        <p>Thank you for shopping with ShopSphere.</p>
+    <p>Your order has been recorded.</p>
 
-        <h2 th:text="|Your Order Total: ₹${total}|"></h2>
+    <a href="/">Continue Shopping</a>
 
-        <p>Your order has been confirmed.</p>
+    <a href="/order-history">My Orders</a>
 
-        <a href="/" class="home-button">Continue Shopping</a>
-
-    </div>
-
-</section>
-
-<footer>
-    <h3>ShopSphere</h3>
-    <p>Your everyday shopping destination.</p>
-    <p>© 2026 ShopSphere. All rights reserved.</p>
-</footer>
+</div>
 
 </body>
 </html>

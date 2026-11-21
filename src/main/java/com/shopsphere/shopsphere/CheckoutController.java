@@ -22,14 +22,17 @@ public class CheckoutController {
             return "redirect:/cart";
         }
 
-        double total = 0;
-
-        for (CartItem item : cart) {
-            total += item.getSubtotal();
-        }
+        double subtotal = calculateSubtotal(cart);
+        double discount = calculateDiscount(session, subtotal);
+        double total = subtotal - discount;
 
         model.addAttribute("cart", cart);
+        model.addAttribute("subtotal", subtotal);
+        model.addAttribute("discount", discount);
         model.addAttribute("total", total);
+
+        model.addAttribute("couponCode", session.getAttribute("couponCode"));
+        model.addAttribute("couponMessage", session.getAttribute("couponMessage"));
 
         return "checkout";
     }
@@ -43,16 +46,74 @@ public class CheckoutController {
             return "redirect:/cart";
         }
 
-        double total = 0;
+        double subtotal = calculateSubtotal(cart);
+        double discount = calculateDiscount(session, subtotal);
+        double total = subtotal - discount;
 
-        for (CartItem item : cart) {
-            total += item.getSubtotal();
+        String customerName = (String) session.getAttribute("loggedInUser");
+        String email = (String) session.getAttribute("loggedInEmail");
+
+        if (customerName == null) {
+            customerName = "Guest";
         }
 
+        if (email == null) {
+            email = "Guest";
+        }
+
+        Order order = new Order(
+                OrderHistoryController.nextOrderId++,
+                customerName,
+                email,
+                total
+        );
+
+        OrderHistoryController.orders.add(order);
+
+        model.addAttribute("orderId", order.getOrderId());
+        model.addAttribute("subtotal", subtotal);
+        model.addAttribute("discount", discount);
         model.addAttribute("total", total);
 
         session.removeAttribute("cart");
+        session.removeAttribute("couponCode");
+        session.removeAttribute("discountType");
+        session.removeAttribute("discountValue");
+        session.removeAttribute("couponMessage");
 
         return "order-success";
+    }
+
+    private double calculateSubtotal(List<CartItem> cart) {
+
+        double subtotal = 0;
+
+        for (CartItem item : cart) {
+            subtotal += item.getSubtotal();
+        }
+
+        return subtotal;
+    }
+
+    private double calculateDiscount(HttpSession session, double subtotal) {
+
+        String discountType = (String) session.getAttribute("discountType");
+        Object value = session.getAttribute("discountValue");
+
+        if (discountType == null || !(value instanceof Number)) {
+            return 0;
+        }
+
+        double discountValue = ((Number) value).doubleValue();
+
+        if (discountType.equals("PERCENT")) {
+            return subtotal * discountValue / 100;
+        }
+
+        if (discountType.equals("FIXED")) {
+            return Math.min(discountValue, subtotal);
+        }
+
+        return 0;
     }
 }
