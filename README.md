@@ -53,3 +53,6 @@ This project was developed to understand Java-based web application development,
 - Online payment integration
 - Email notifications
 - Product management through admin panel
+
+- ## Contributors
+- Raksha M (@mraksha0908-ux)
